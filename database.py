@@ -187,9 +187,10 @@ def insert_all(dining_halls):
 							for item in station.items:
 								insert_item(station_id, item)
 def overview_exists(view):
-	sql = "SELECT id FROM DiningHallOverviews WHERE name=\"{:s}\""
+	sql = "SELECT id FROM DiningHallOverviews WHERE name=\"{:s}\"".format(view.name)
+	#print(sql)
 	if commit(sql):
-		return len(cursor.fetch_all()) >= 1
+		return len(cursor.fetchall()) >= 1
 	return False
 								
 def insert_overview(view):
