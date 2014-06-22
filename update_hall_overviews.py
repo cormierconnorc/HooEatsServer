@@ -6,7 +6,7 @@ from dining_objs import *
 
 def add_info(line):
 	global long_line
-	line_parts = line.split("|")
+	line_parts = line.strip().split("|")
 	hall_obj = DiningHallOverview(line_parts[0], line_parts[1], line_parts[2], line_parts[3], line_parts[4], (line_parts[5] if line_parts[4] == "2" else ""))
 	database.insert_overview(hall_obj)
 	

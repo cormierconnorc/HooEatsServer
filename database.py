@@ -6,7 +6,7 @@ from dining_objs import *
 #add_food(full_name, categories_id, nutritional_info)
 
 #Open database connection													 
-db = pymysql.connect("localhost","serveman","uvahacks","HooEats" )
+db = pymysql.connect("localhost", "serveman", "uvahacks", "HooEats")
 
 # prepare a cursor object using cursor() method								
 cursor = db.cursor()
@@ -145,6 +145,15 @@ def get_dining_halls():
 				odininghalls[d].meals.append(omeals[m])
 	
 	return odininghalls
+
+def get_all_dining_hall_overviews():
+	sql = "SELECT * FROM DiningHallOverviews"
+	overviews = []
+	if commit(sql):
+		d_list = cursor.fetchall()
+		for row in d_list:
+			overviews.append(DiningHallOverview(row[1], row[2], row[3], row[4], row[5], row[6]))
+	return overviews
 	
 def get_last_insert_id():
 	return db.insert_id()

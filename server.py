@@ -10,6 +10,7 @@ import time
 from dining_objs import *
 
 cache = None
+overview_cache = None
 
 class StupidHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
 	def build_response(self, param_dict):
@@ -18,6 +19,8 @@ class StupidHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
 		if param_dict.get("halls") != None and "all" in param_dict["halls"]:
 			#return open("scraper.out").read()
 			return get_json(cache)
+		elif param_dict.get("halls") != None and "overview" in param_dict["halls"]:
+			return get_json(overview_cache)
 		else:
 			return ""
 
@@ -29,6 +32,10 @@ class StupidHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
 
 		response = self.build_response(params)
 
+		if response == None:
+			print("No response")
+			response = ""
+		
 		#Respond
 		self.send_response(200)
 		self.send_header("Content-type", "text/plain")
@@ -38,8 +45,10 @@ class StupidHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
 
 def refresh_cache():
 	global cache
+	global overview_cache
 	while True:
 		cache = database.get_dining_halls()
+		overview_cache = database.get_all_dining_hall_overviews()
 		print("Finished getting cache at: " + time.strftime("%H:%M:%S"))
 		time.sleep(60 * 37)
 
