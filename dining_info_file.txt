@@ -1,0 +1,65 @@
+#Enter data into this file and run the "update_hall_overviews.py" script to insert dining hall overviews into the database
+#Data in this file is stored in this format:
+####################################################################
+#name|description|location|hours|accepts mealswipes|mealswipe hours#
+####################################################################
+#One dining location per line
+#Hours are in a very specific format: days (integers, where 0 = Monday and 6 = Sunday) or ranges of days (0-4 == "Monday" - "Friday") followed by a colon with their hours (0-4:10-22 == "Monday through Friday, 10 AM - 10 PM", -1 indicates that the location is not open in the given period) are provided in a comma-separated list. Note on hours: Minutes, when present, are given after a decimal point: 0-4:10.30-22
+#0-4:10-22,5-6:13-16
+#"Accepts Mealswipes" is a numeric field. 0 indictes no mealswipes are accepted, 1 indicates they are accepted whenever open (dining halls, essentially), and 2 indicates meal swipes are accepted at specified hours
+#Mealswipe hours are given in the same format as above hours, only needs to be set if "Accepts Mealswipes" == 2
+#To pair dining hall overviews with dining halls, you'll have to cut "Menu" off of the dining hall menu name and check if the menu name is a substring of the hall name
+
+#Sources for this information: http://www.campusdish.com/NR/rdonlyres/463B73A2-A311-41AF-ABED-F240C634FD2E/149367/map2014small.pdf, http://www.campusdish.com/NR/rdonlyres/E2396507-5D14-4F4C-895A-D9C8DC9E979B/0/Summer2014UVaDining.pdf, http://www.campusdish.com/en-US/CSMA/Virginia/DiningPlans/MealExchangeProgram.htm, http://itouchmap.com/latlong.html
+
+Observatory Hill Dining Room|Known around Grounds as O'Hill, it is the dining hall where people from all years gather to catch up over lunch or dinner. Offerings include a deli, grill stations (and CHOP HOUSE!), salad bar, fresh pizza, and desserts|38.034793,-78.515004|0-6:7-18.30|1
+
+Crossroads|This convenience store offers a grill, made-to-order sandwiches, a variety of sundries, other snacks, coffee, sushi, salads, and beverages. Eat or study in the seating area right outside!|38.034793,-78.515004|0-6:-1|2|0-3:21-0.30,4-5:21-1.30,6:21-23.30
+
+Newcomb Hall (Fresh Food Co.)|Recently renovated, this dining hall is on Central Grounds and offers all sorts of delicious options. It's a great place to hang out with friends or study. Includes deli, grill stations, vegetarian options, salad bar, pizza, and desserts|38.035600,-78.506720|0-6:-1|1
+
+N2GO|Stop in for a to-go box to take food with you wherever you go!|38.035600,-78.506720|0-6:-1|1
+
+Pavilion XI|This food court offers a variety of items like Chick-Fil-A, Burrito Theory, Topio's Pizza, Freshens Smoothies, Pao's Deli with soup and salads, and fresh sushi.|38.035600,-78.506720|0-6:-1|2|0-3:16-20
+
+Provisions on Demand (P.O.D.)@Newcomb|Grab & Go sandwiches, salads, snacks, coffee, and other beverages|38.035600,-78.506720|0-6:-1|0
+
+In The Nood|It's Virginia's Gourmet Noodle Bar! Treat parents or dine with friends at this restaurant on Grounds.|38.035600,-78.506720|0-6:-1|0
+
+Language House Dining Rooms|French and Spanish houses each have their own dining rooms. Language house residents only.|38.031729,-78.502295|0-6:-1|1
+
+Runk Dining Room|Servicing the Hereford area, Runk offers grill stations, a salad bar, and desserts. Runk Dining Room is a relaxing place for group study and meals with friends.|38.029041,-78.518661|0-6:-1|1
+
+C3@Runk|This convenience store offers a variety of sundries, Grab & Go items, frozen foods, snacks, and much more|38.029041,-78.518661|0-6:-1|0
+
+John Paul Jones Athletic Dining|U.Va. Varisty Athletes on an Athletic Meal Plan can enjoy dinner at JPJ Dining Room Sunday through Thursday evening. This dining room is reserved for NCAA Varsity Athletes only.|38.045739,-78.506288|0-6:-1|1
+
+Einstein Bros Bagels@UVa Bookstore|Darn good coffee and bagels! Sandwiches, soups, specialty coffee drinks, and more.|38.035997,-78.507268|0-4:8.30-15,5-6:-1|0
+
+Einstein Bros Bagels@Rice Hall|Darn good coffee and bagels! Sandwiches, soups, specialty coffee drinks, and more.|38.031592,-78.510683|0-6:-1|0
+
+West Range Cafe|Enjoy your dining experience in this gorgeous and historic building on the range. Offers made-to-order grill items, Java City Coffee, specialty beverages, fresh baked pastries, and sushi.|38.034482,-78.505462|0-4:8-14,5-6:-1|0
+
+The Garden Room|Faculty and staff can enjoy daily lunch specials at the Garden Room Monday through Friday, from 11:30 AM to 2:00 PM|38.034482,-78.505462|0-6:-1|0
+
+Starbucks Coffee|Enjoy your Starbucks right on Grounds! Study in and around Nau with coffe, frappucinos, drink blends, teas, snacks, sandwiches, pastries, and desserts.|38.031525,-78.505597|0-4:8.30-15.30|0
+
+Wilsdorf Cafe|Engineers call this cafe home (no, they actually don't. Silly UVa dining)! Relax and study with Java City coffee, smoothies, salads, sandwiches, snacks, and pastries.|38.033521,-78.511117|0-6:-1|0
+
+Poolside Cafe|Relax after a workout (offsetting any calories you've burned with sugar-laden smoothies) or spend some time studying with a bite to eat! Offers Freshens smoothies, frozen yogurt, salads, sandwiches, and sushi|38.032552,-78.513797|0-4:10-18,5-6:-1|0
+
+Fine Arts Cafe|U.Va.'s flagship sustainable cafe offers made-to-order grill items, quesadillas, and sandwiches, as well as select Grab & Go options.|38.038919,-78.503451|0-6:-1|0
+
+Greenberry's@Alderman Cafe|This is a perfect study spot! Get drinks, Greenberry's (mediocre) coffe, sandwiches, snacks, pastries, and specialty deserts.|38.03641,-78.505535|0-4:8-14,5-6:-1|0
+
+Greenberry's@Clark Hall|Stop by for a pick-me-up snack before hitting those books! Grab Greenberry's Coffee, sandwiches, salads, snacks, and pastries here.|38.033118,-78.507510|0-6:-1|0
+
+C3@Lambeth|This convenience store offers a variety of sundries, Grab & Go items, frozen foods, snacks, and much more|38.041956,-78.503489|0-6:-1|2|0-4:17-0
+
+Provisions on Demand (P.O.D.)@Claude Moore|Grab & Go sandwiches, salads, snacks, coffee, and other beverages|38.031364,-78.501456|0-6:-1|0
+
+Cafe McLeod|Open to all students! Grab Bleecker Street items (whatever those are), Java City Coffee, freshly baked sandwiches and pastries!|38.030764,-78.501794|0-6:-1|2|0-3:8-15,4:8-14,5-6:-1
+
+The Castle|This is the place to be for those late night cravings! Offers Grilleworks, Claymore's hot subs and pizzas, salads, other snacks, and beverages.|38.035746,-78.510688|0-6:-1|2|0-3:21-1.30,4-5:-1,6:21-1.30
+
+Sidley Austin Cafe|Deli, pizza, Grilleworks, and Greenberry's Coffee|38.053679,-78.510597|0-6:-1|0
