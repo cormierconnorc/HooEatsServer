@@ -96,6 +96,13 @@ def get_all_active_stalls():
 	commit(sql)
 	return cursor.fetchall()
 
+def get_all_active_items():
+	sql = """SELECT DISTINCT * FROM Items, DiningHalls, Meals, Stalls 
+	WHERE Items.active=1 AND DiningHalls.active=1 AND Meals.active=1 AND Stalls.active=1"""
+	commit(sql)
+	return cursor.fetchall()
+
+
 def get_dining_halls():
 	foods = get_all_active_foods()
 	stalls = get_all_active_stalls()
