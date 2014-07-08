@@ -49,7 +49,7 @@ instance Json (Item) where
 
 --For our String type: convert to json. Allows us to maintain consistency
 instance Json (Nutrition) where
-         json (Nutrition info) = info
+         json (Nutrition info) = show info
 
 --List instance
 instance (Json a) => Json [a] where
