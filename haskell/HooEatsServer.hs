@@ -10,11 +10,12 @@ import DatabaseClient
 import Database.HDBC
 import Database.HDBC.ODBC
 import DiningData
+import qualified Data.ByteString.Char8 as B  --Bytestrings to fix performance issues
 
 main = do
      --Create mutable memory locations to share between threads
-     mView <- (newMVar "I'm a hall overview list!")
-     mMenu <- (newMVar "I'm a dining hall menu list!")
+     mView <- (newMVar $ B.pack "I'm a hall overview list!")
+     mMenu <- (newMVar $ B.pack "I'm a dining hall menu list!")
      --Open database connection
      db <- connectDb
      --Start cache refresh threads
@@ -29,15 +30,15 @@ guardParam name val = do
          guard (val == nVal)
          return nVal
 
-server :: (MVar String, MVar String) -> ServerPart String
+server :: (MVar B.ByteString, MVar B.ByteString) -> ServerPart B.ByteString
 server (mView, mMenu) = msum [ do guardParam "halls" "all"
                                   serve mMenu
                              , do guardParam "halls" "overview"
                                   serve mView
-                             , badRequest "Missing or invalid \"halls\" parameter"
+                             , badRequest $ B.pack "Missing or invalid \"halls\" parameter"
                              ]
 
-serve :: (MVar String) -> ServerPart String
+serve :: (MVar B.ByteString) -> ServerPart B.ByteString
 serve mVar = do
       val <- liftIO $ readMVar mVar
       ok val
@@ -48,12 +49,12 @@ oMinRef :: Int
 oMinRef = 3600
 
 --Fetch the dining hall overview information out of the database
-refreshOverviewList :: MVar String -> Connection -> IO ()
+refreshOverviewList :: MVar B.ByteString -> Connection -> IO ()
 refreshOverviewList mVar db = forever $ do
                 putStrLn "Refreshing overview!"
                 --Get from database and convert to json
                 overList <- retrieveOverviews db
-                let jsonOver = json overList
+                let jsonOver = B.pack $ json overList
                 swapMVar mVar jsonOver
                 --Show completion
                 time <- getClockTime
@@ -66,13 +67,13 @@ mMinRef :: Int
 mMinRef = 37
 
 --Fetch the hall menu information out of the database
-refreshMenuList :: MVar String -> Connection -> IO ()
+refreshMenuList :: MVar B.ByteString -> Connection -> IO ()
 refreshMenuList mVar db = forever $ do
                 putStrLn "Refreshing menu list (and running scraper)!"
                 --runScraper db
                 --Pull new list out of database and jsonify it
                 menuList <- retrieveAll db
-                let jsonMenu = json menuList
+                let jsonMenu = B.pack $ json menuList
                 swapMVar mVar jsonMenu
                 --Show completion time
                 time <- getClockTime
